@@ -14,15 +14,17 @@
 | dcf-model | Securities | [CuteGhost222/financial-services](https://github.com/CuteGhost222/financial-services) | Apache-2.0 |
 | comps-analysis | Securities | [CuteGhost222/financial-services](https://github.com/CuteGhost222/financial-services) | Apache-2.0 |
 
-### Health (5)
+### Health & Lifestyle (5)
 
-| Skill | Source | License |
-|-------|--------|---------|
-| apple-health-analyst | [RuochenLyu/apple-health-analyst](https://github.com/RuochenLyu/apple-health-analyst) | MIT |
-| fitness-data-parser | [bunburya/fitness_tracker_data_parsing](https://github.com/bunburya/fitness_tracker_data_parsing) | MIT |
-| sleep-analysis | [tuchandra/sleep-analysis](https://github.com/tuchandra/sleep-analysis) | MIT |
-| insurance-claims-analyzer | [kelynst/insclaim_analyzer](https://github.com/kelynst/insclaim_analyzer) | MIT |
-| bank-statement-analyzer | [sahusaksham726/Bank-Statement-Analyzer](https://github.com/sahusaksham726/Bank-Statement-Analyzer) | MIT |
+| Skill | Source | License | Trigger Example |
+|-------|--------|---------|-----------------|
+| tcm-constitution | [fxw-labs/tcm-constitution](https://github.com/fxw-labs/tcm-constitution) | MIT | "我是什么体质" / "中医养生建议" |
+| health-mood | [sanool/healthskills](https://github.com/sanool/healthskills) | MIT | "我心情不好" / "帮我记录情绪" |
+| health-break | [sanool/healthskills](https://github.com/sanool/healthskills) | MIT | "提醒我休息" / "久坐提醒" |
+| mojo-food-log | [mojoapp-ai/agent-skills](https://github.com/mojoapp-ai/agent-skills) | MIT | "记录今天吃了什么" / "饮食日志" |
+| personal-trainer | [npapatheodorou/personal-trainer-skill](https://github.com/npapatheodorou/personal-trainer-skill) | MIT | "帮我制定训练计划" / "增肌方案" |
+
+All health skills are conversation-based - no data files required. Just describe your need and the skill activates.
 
 ## Installation
 
