@@ -24,19 +24,19 @@ version: 1.0.0
 
 | 平台 | 渲染方式 | 可获取数据 | 搜索方法 |
 |------|---------|----------|---------|
-| **马蜂窝** (mafengwo.cn) | 反爬（直接 curl 返回空页） | 目的地攻略、游记、蜂首推荐、问答 | ⚠️ 必须用 autoglm-websearch 搜 "{城市} 周边游 site:mafengwo.cn" 或 "{目的地} 攻略 site:mafengwo.cn"；用 autoglm-open-link 打开游记提取详细行程 |
-| **小红书** (xiaohongshu.com) | React SPA（直接 curl 返回 JS 壳） | 真实周末游笔记、行程分享、拍照攻略、避雷帖 | autoglm-websearch 搜 "{城市} 周边游 site:xiaohongshu.com"，用 autoglm-open-link 打开笔记提取正文 |
-| **携程** (ctrip.com) | SPA（286KB 首页但无文字内容） | 门票/酒店价格、用户点评、目的地排名 | autoglm-websearch 搜 "{目的地} 门票 site:ctrip.com" 获取价格信息 |
-| **知乎** (zhihu.com) | 服务端渲染 | "XX城市周边有什么好玩的"回答帖、本地人推荐 | autoglm-websearch 搜 "{城市} 周边游 推荐 site:zhihu.com" |
-| **百度贴吧** (tieba.baidu.com) | 服务端渲染 | 旅游吧/本地吧的出行讨论帖 | autoglm-websearch 搜 "{城市} 周边游 site:tieba.baidu.com" |
-| **微博** (weibo.com) | 部分可抓 | 旅游博主推荐、景区热搜、限时活动 | autoglm-websearch 搜 "{城市} 周边游 推荐 site:weibo.com" |
-| **大众点评** (dianping.com) | 反爬（406+验证码） | 景区评分、门票信息、游乐项目评价 | autoglm-websearch 搜 "{城市} 景点 site:dianping.com" |
-| **天气查询** | API 可用 | 周末天气预报 | autoglm-websearch 搜 "{城市} 天气预报 周末" |
+| **马蜂窝** (mafengwo.cn) | 反爬（直接 curl 返回空页） | 目的地攻略、游记、蜂首推荐、问答 | ⚠️ 必须用 网络搜索 搜 "{城市} 周边游 site:mafengwo.cn" 或 "{目的地} 攻略 site:mafengwo.cn"；用 网页内容提取 打开游记提取详细行程 |
+| **小红书** (xiaohongshu.com) | React SPA（直接 curl 返回 JS 壳） | 真实周末游笔记、行程分享、拍照攻略、避雷帖 | 网络搜索 搜 "{城市} 周边游 site:xiaohongshu.com"，用 网页内容提取 打开笔记提取正文 |
+| **携程** (ctrip.com) | SPA（286KB 首页但无文字内容） | 门票/酒店价格、用户点评、目的地排名 | 网络搜索 搜 "{目的地} 门票 site:ctrip.com" 获取价格信息 |
+| **知乎** (zhihu.com) | 服务端渲染 | "XX城市周边有什么好玩的"回答帖、本地人推荐 | 网络搜索 搜 "{城市} 周边游 推荐 site:zhihu.com" |
+| **百度贴吧** (tieba.baidu.com) | 服务端渲染 | 旅游吧/本地吧的出行讨论帖 | 网络搜索 搜 "{城市} 周边游 site:tieba.baidu.com" |
+| **微博** (weibo.com) | 部分可抓 | 旅游博主推荐、景区热搜、限时活动 | 网络搜索 搜 "{城市} 周边游 推荐 site:weibo.com" |
+| **大众点评** (dianping.com) | 反爬（406+验证码） | 景区评分、门票信息、游乐项目评价 | 网络搜索 搜 "{城市} 景点 site:dianping.com" |
+| **天气查询** | API 可用 | 周末天气预报 | 网络搜索 搜 "{城市} 天气预报 周末" |
 
 ### 搜索工具使用顺序
 
-1. **第一选择**：`autoglm-websearch` -- 搜索关键词，获取搜索结果摘要
-2. **第二选择**：`autoglm-open-link` -- 打开游记/攻略/笔记页面提取完整正文
+1. **第一选择**：`网络搜索` -- 搜索关键词，获取搜索结果摘要
+2. **第二选择**：`网页内容提取` -- 打开游记/攻略/笔记页面提取完整正文
 3. ⚠️ 马蜂窝/携程/小红书/大众点评直接 curl 无效，必须走 websearch + open-link
 4. **备选**：知乎/贴吧为服务端渲染，理论上可直接 curl，但建议优先走 websearch
 
@@ -61,11 +61,11 @@ version: 1.0.0
 **来源 1: 小红书（真实周末游笔记 核心来源）**
 
 ```
-autoglm-websearch 查询 A："{出发城市} 周边游 {一日/两日} site:xiaohongshu.com"
-autoglm-websearch 查询 B："{出发城市} {兴趣关键词} 周末 site:xiaohongshu.com"
+网络搜索 查询 A："{出发城市} 周边游 {一日/两日} site:xiaohongshu.com"
+网络搜索 查询 B："{出发城市} {兴趣关键词} 周末 site:xiaohongshu.com"
 ```
 
-用 autoglm-open-link 打开高赞笔记，提取：
+用 网页内容提取 打开高赞笔记，提取：
 - 目的地名称和位置
 - 行程安排（时间线）
 - 交通方式和耗时
@@ -76,11 +76,11 @@ autoglm-websearch 查询 B："{出发城市} {兴趣关键词} 周末 site:xiaoh
 **来源 2: 马蜂窝（目的地攻略和游记）**
 
 ```
-autoglm-websearch 查询 C："{出发城市} 周边游 攻略 site:mafengwo.cn"
-autoglm-websearch 查询 D："{候选目的地} 攻略 游记 site:mafengwo.cn"
+网络搜索 查询 C："{出发城市} 周边游 攻略 site:mafengwo.cn"
+网络搜索 查询 D："{候选目的地} 攻略 游记 site:mafengwo.cn"
 ```
 
-用 autoglm-open-link 打开游记，提取：
+用 网页内容提取 打开游记，提取：
 - 详细行程安排
 - 景点推荐和游览顺序
 - 餐饮住宿推荐
@@ -89,8 +89,8 @@ autoglm-websearch 查询 D："{候选目的地} 攻略 游记 site:mafengwo.cn"
 **来源 3: 知乎（本地人口碑验证）**
 
 ```
-autoglm-websearch 查询 E："{出发城市} 周边有什么好玩的 site:zhihu.com"
-autoglm-websearch 查询 F："{候选目的地} 值得去吗 site:zhihu.com"
+网络搜索 查询 E："{出发城市} 周边有什么好玩的 site:zhihu.com"
+网络搜索 查询 F："{候选目的地} 值得去吗 site:zhihu.com"
 ```
 
 提取：本地人真实评价、避雷信息、替代推荐。
@@ -98,8 +98,8 @@ autoglm-websearch 查询 F："{候选目的地} 值得去吗 site:zhihu.com"
 **来源 4: 携程/大众点评（门票/评分验证）**
 
 ```
-autoglm-websearch 查询 G："{候选目的地} 门票 site:ctrip.com"
-autoglm-websearch 查询 H："{候选目的地} 景点 site:dianping.com"
+网络搜索 查询 G："{候选目的地} 门票 site:ctrip.com"
+网络搜索 查询 H："{候选目的地} 景点 site:dianping.com"
 ```
 
 获取：门票价格、开放时间、用户评分。
@@ -196,7 +196,7 @@ autoglm-websearch 查询 H："{候选目的地} 景点 site:dianping.com"
 - 订房平台建议（携程/美团/飞猪比价）
 
 **天气与装备**
-- autoglm-websearch 搜 "{城市} 天气 周末" 获取预报
+- 网络搜索 搜 "{城市} 天气 周末" 获取预报
 - 根据天气和目的地类型建议穿着和装备
 
 **省钱技巧**

@@ -26,21 +26,21 @@ version: 3.1.0
 
 | 平台 | 渲染方式 | 可获取内容 | 搜索方法 |
 |------|---------|----------|---------|
-| **知乎** (zhihu.com) | 服务端渲染 | 高赞笑话回答、段子合集帖、"你听过最好笑的笑话"等问题 | autoglm-websearch 搜 "{类型} 笑话 搞笑 site:zhihu.com"，用 autoglm-open-link 打开回答页提取全文 |
-| **百度贴吧** (tieba.baidu.com) | 服务端渲染 | 笑话吧/冷笑话吧/段子吧热帖 | autoglm-websearch 搜 "笑话 {类型} 爆笑 site:tieba.baidu.com" |
-| **微博** (weibo.com) | 部分服务端渲染 | 热搜段子手、搞笑博主内容 | autoglm-websearch 搜 "{类型} 段子 搞笑 site:weibo.com" |
-| **小红书** (xiaohongshu.com) | React SPA（直接 curl 仅返回壳） | 生活类搞笑、情境笑话、图文段子 | 必须用 autoglm-websearch 搜 "{类型} 笑话 site:xiaohongshu.com" 后，用 autoglm-open-link 打开 |
-| **糗事百科** (qiushibaike.com) | 服务端渲染 | 用户原创段子、真实糗事 | autoglm-websearch 搜 "{类型} 搞笑 site:qiushibaike.com" 或直接 exec curl 抓取 |
-| **Reddit/r/jokes** (reddit.com/r/jokes) | 服务端渲染 | 英文笑话高质量来源，按 hot/top 排序 | autoglm-websearch 搜 "{keyword} joke site:reddit.com/r/jokes" |
-| **Reddit/r/dadjokes** (reddit.com/r/dadjokes) | 服务端渲染 | 谐音梗/冷笑话/ dad jokes | autoglm-websearch 搜 "{keyword} site:reddit.com/r/dadjokes" |
-| **OneLineFun** (onelinefun.com) | 服务端渲染 | 一句话笑话英文素材 | autoglm-websearch 搜 "{keyword} site:onelinefun.com" 或直接 exec curl |
+| **知乎** (zhihu.com) | 服务端渲染 | 高赞笑话回答、段子合集帖、"你听过最好笑的笑话"等问题 | 网络搜索 搜 "{类型} 笑话 搞笑 site:zhihu.com"，用 网页内容提取 打开回答页提取全文 |
+| **百度贴吧** (tieba.baidu.com) | 服务端渲染 | 笑话吧/冷笑话吧/段子吧热帖 | 网络搜索 搜 "笑话 {类型} 爆笑 site:tieba.baidu.com" |
+| **微博** (weibo.com) | 部分服务端渲染 | 热搜段子手、搞笑博主内容 | 网络搜索 搜 "{类型} 段子 搞笑 site:weibo.com" |
+| **小红书** (xiaohongshu.com) | React SPA（直接 curl 仅返回壳） | 生活类搞笑、情境笑话、图文段子 | 必须用 网络搜索 搜 "{类型} 笑话 site:xiaohongshu.com" 后，用 网页内容提取 打开 |
+| **糗事百科** (qiushibaike.com) | 服务端渲染 | 用户原创段子、真实糗事 | 网络搜索 搜 "{类型} 搞笑 site:qiushibaike.com" 或直接 exec curl 抓取 |
+| **Reddit/r/jokes** (reddit.com/r/jokes) | 服务端渲染 | 英文笑话高质量来源，按 hot/top 排序 | 网络搜索 搜 "{keyword} joke site:reddit.com/r/jokes" |
+| **Reddit/r/dadjokes** (reddit.com/r/dadjokes) | 服务端渲染 | 谐音梗/冷笑话/ dad jokes | 网络搜索 搜 "{keyword} site:reddit.com/r/dadjokes" |
+| **OneLineFun** (onelinefun.com) | 服务端渲染 | 一句话笑话英文素材 | 网络搜索 搜 "{keyword} site:onelinefun.com" 或直接 exec curl |
 
 ### 搜索工具使用顺序（重要）
 
-1. **第一选择**：`autoglm-websearch` -- 搜索关键词，获取搜索结果（标题+URL+摘要）
-2. **第二选择**：`autoglm-open-link` -- 打开搜索结果中的具体页面 URL，提取完整正文
+1. **第一选择**：`网络搜索` -- 搜索关键词，获取搜索结果（标题+URL+摘要）
+2. **第二选择**：`网页内容提取` -- 打开搜索结果中的具体页面 URL，提取完整正文
 3. **备选**：`exec` + Python urllib 直接抓取（适用于知乎/贴吧/糗百/Reddit 等服务端渲染站点）
-4. ⚠️ 小红书等 React SPA 站直接 curl 只返回壳，必须用 autoglm-open-link
+4. ⚠️ 小红书等 React SPA 站直接 curl 只返回壳，必须用 网页内容提取
 
 ## 笑话类型库
 
@@ -74,7 +74,7 @@ version: 3.1.0
 - 程序员 -> 知乎 + Reddit/r/jokes
 - 冷笑话 -> 贴吧 + Reddit/r/dadjokes
 - 职场 -> 知乎 + 微博
-- 家庭 -> 小红书（需 autoglm-open-link）+ 知乎
+- 家庭 -> 小红书（需 网页内容提取）+ 知乎
 - 一句话 -> OneLineFun + Reddit/r/jokes
 - 脑洞 -> 知乎 + Reddit/r/jokes
 - 自嘲 -> 知乎 + 糗事百科
@@ -82,7 +82,7 @@ version: 3.1.0
 - 历史/文化 -> 知乎
 - 情境对话 -> Reddit/r/jokes + 微博
 
-autoglm-websearch 查询模板：
+网络搜索 查询模板：
 1. "site:{平台1域名} {类型} 笑话 搞笑"
 2. "site:{平台2域名} {类型} 段子 爆笑"
 ```
@@ -155,7 +155,7 @@ autoglm-websearch 查询模板：
 ### 模式四：主题笑话
 
 1. 提取主题关键词
-2. autoglm-websearch 搜 "site:zhihu.com {主题} 笑话 搞笑" + "site:reddit.com {主题英文} joke funny"
+2. 网络搜索 搜 "site:zhihu.com {主题} 笑话 搞笑" + "site:reddit.com {主题英文} joke funny"
 3. 如果主题太冷门，套用通用类型 + 主题融入
 4. 自检 -> 输出
 

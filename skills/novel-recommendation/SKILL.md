@@ -25,22 +25,22 @@ version: 3.1.0
 
 | 平台 | 渲染方式 | 可获取数据 | 搜索方法 |
 |------|---------|----------|---------|
-| **豆瓣读书** (book.douban.com) | 服务端渲染（可直接 curl） | 书名、评分(1-10)、评价人数、作者、出版社、短评、标签、书单 | autoglm-websearch 搜 "{类型} site:book.douban.com" 拿 URL；或直接 curl 标签页 `https://book.douban.com/tag/{标签名}` 提取 `<li class="subject-item">` 中的书名/评分/出版信息 |
-| **Goodreads** (goodreads.com) | 服务端渲染 | 国际评分(1-5)、评分人数、Genre 标签、类似书推荐 | autoglm-websearch 搜 "site:goodreads.com books similar to {书名}" 或 "best {genre} novels 2024 site:goodreads.com" |
-| **知乎** (zhihu.com) | 服务端渲染 | 书单回答帖、类型推荐帖、避雷帖 | autoglm-websearch 搜 "{类型} 小说 推荐 书荒 site:zhihu.com" |
-| **百度贴吧** (tieba.baidu.com) | 服务端渲染 | 网文口碑、类型吧推荐神作帖 | autoglm-websearch 搜 "{类型} 神作 推荐 site:tieba.baidu.com" |
-| **番茄小说** (fanqienovel.com) | React SPA（直接 curl 仅返回分类标签） | 免费网文排行榜、分类榜单（男频/女频各 20+ 子类型）、热度数据 | autoglm-websearch 搜 "{类型} site:fanqienovel.com" 拿到书页 URL 后，用 autoglm-open-link 打开提取书名/简介/评分/字数。直接 curl 首页可获取分类列表：西方奇幻/东方仙侠/科幻末世/都市日常/都市修真/都市高武/历史古代/战神赘婿/都市种田/传统玄幻/悬疑灵异/抗战谍战 等 |
-| **起点中文网** (qidian.com) | 反爬严格（直接 curl 返回空） | 网文评分、追人数、月票榜、完结榜 | 必须用 autoglm-websearch 搜 "{类型} site:qidian.com 完结 排行" 拿到页面 URL，再用 autoglm-open-link 打开。直接 curl 无效 |
-| **晋江文学城** (jjwxc.net) | GBK 编码（需处理编码） | 言情/纯爱类评分、收藏榜、完结文 | autoglm-websearch 搜 "{类型} site:jjwxc.net 高分 完结"。直接 curl 需指定 GBK 解码 |
-| **微信读书** (weread.qq.com) | 服务端渲染 | 出版书评分、读者标记、热门榜单 | autoglm-websearch 搜 "{类型} site:weread.qq.com 热门" |
-| **龙的天空** (lkong.com) | 服务端渲染 | 资深网文书评、神作共识贴 | autoglm-websearch 搜 "{类型} 神作 site:lkong.com" |
+| **豆瓣读书** (book.douban.com) | 服务端渲染（可直接 curl） | 书名、评分(1-10)、评价人数、作者、出版社、短评、标签、书单 | 网络搜索 搜 "{类型} site:book.douban.com" 拿 URL；或直接 curl 标签页 `https://book.douban.com/tag/{标签名}` 提取 `<li class="subject-item">` 中的书名/评分/出版信息 |
+| **Goodreads** (goodreads.com) | 服务端渲染 | 国际评分(1-5)、评分人数、Genre 标签、类似书推荐 | 网络搜索 搜 "site:goodreads.com books similar to {书名}" 或 "best {genre} novels 2024 site:goodreads.com" |
+| **知乎** (zhihu.com) | 服务端渲染 | 书单回答帖、类型推荐帖、避雷帖 | 网络搜索 搜 "{类型} 小说 推荐 书荒 site:zhihu.com" |
+| **百度贴吧** (tieba.baidu.com) | 服务端渲染 | 网文口碑、类型吧推荐神作帖 | 网络搜索 搜 "{类型} 神作 推荐 site:tieba.baidu.com" |
+| **番茄小说** (fanqienovel.com) | React SPA（直接 curl 仅返回分类标签） | 免费网文排行榜、分类榜单（男频/女频各 20+ 子类型）、热度数据 | 网络搜索 搜 "{类型} site:fanqienovel.com" 拿到书页 URL 后，用 网页内容提取 打开提取书名/简介/评分/字数。直接 curl 首页可获取分类列表：西方奇幻/东方仙侠/科幻末世/都市日常/都市修真/都市高武/历史古代/战神赘婿/都市种田/传统玄幻/悬疑灵异/抗战谍战 等 |
+| **起点中文网** (qidian.com) | 反爬严格（直接 curl 返回空） | 网文评分、追人数、月票榜、完结榜 | 必须用 网络搜索 搜 "{类型} site:qidian.com 完结 排行" 拿到页面 URL，再用 网页内容提取 打开。直接 curl 无效 |
+| **晋江文学城** (jjwxc.net) | GBK 编码（需处理编码） | 言情/纯爱类评分、收藏榜、完结文 | 网络搜索 搜 "{类型} site:jjwxc.net 高分 完结"。直接 curl 需指定 GBK 解码 |
+| **微信读书** (weread.qq.com) | 服务端渲染 | 出版书评分、读者标记、热门榜单 | 网络搜索 搜 "{类型} site:weread.qq.com 热门" |
+| **龙的天空** (lkong.com) | 服务端渲染 | 资深网文书评、神作共识贴 | 网络搜索 搜 "{类型} 神作 site:lkong.com" |
 
 ### 搜索工具使用顺序（重要）
 
-1. **第一选择**：`autoglm-websearch` -- 搜索关键词，获取搜索结果（标题+URL+摘要）
-2. **第二选择**：`autoglm-open-link` -- 打开搜索结果中的具体页面 URL，提取完整正文
+1. **第一选择**：`网络搜索` -- 搜索关键词，获取搜索结果（标题+URL+摘要）
+2. **第二选择**：`网页内容提取` -- 打开搜索结果中的具体页面 URL，提取完整正文
 3. **备选**：`exec` + Python urllib 直接抓取（仅适用于豆瓣读书等服务端渲染站点）
-4. ⚠️ 起点/番茄小说等 React SPA 或反爬站点直接 curl 无效，必须走 autoglm-open-link
+4. ⚠️ 起点/番茄小说等 React SPA 或反爬站点直接 curl 无效，必须走 网页内容提取
 
 ## 工作流程
 
@@ -57,7 +57,7 @@ version: 3.1.0
 
 **参考书分析**（用户给了参考书时必做）：
 ```
-autoglm-websearch 查询：
+网络搜索 查询：
 1. "site:book.douban.com {参考书} 书评" -> 提取豆瓣评分和读者评价关键词
 2. "site:zhihu.com 类似 {参考书} 的小说 推荐" -> 找同类书推荐帖
 3. "site:goodreads.com books similar to {参考书英文名}" -> 国际同类推荐
@@ -69,8 +69,8 @@ autoglm-websearch 查询：
 **来源 1: 豆瓣读书**（出版书/经典文学核心来源）
 
 ```
-autoglm-websearch 查询 A："{类型} 小说 高分 site:book.douban.com"
-autoglm-websearch 查询 B："类似 {参考书} site:book.douban.com"
+网络搜索 查询 A："{类型} 小说 高分 site:book.douban.com"
+网络搜索 查询 B："类似 {参考书} site:book.douban.com"
 ```
 或直接用 exec + urllib 抓取标签页：
 ```python
@@ -85,8 +85,8 @@ url = f'https://book.douban.com/tag/{urllib.parse.quote(标签名)}'
 **来源 2: 知乎 + 贴吧**（口碑验证和网文发现）
 
 ```
-autoglm-websearch 查询 C："{类型} 小说 推荐 书荒 site:zhihu.com"
-autoglm-websearch 查询 D："{类型} 神作 推荐 site:tieba.baidu.com"
+网络搜索 查询 C："{类型} 小说 推荐 书荒 site:zhihu.com"
+网络搜索 查询 D："{类型} 神作 推荐 site:tieba.baidu.com"
 ```
 获取：多人口碑一致的"神作"书名、知乎高赞书单。
 **筛选标准**：被 3 个以上独立推荐帖提及的书优先级最高。
@@ -94,30 +94,30 @@ autoglm-websearch 查询 D："{类型} 神作 推荐 site:tieba.baidu.com"
 **来源 3: 网文平台**（网文热度、完结状态验证）
 
 ```
-# 起点（反爬严格，必须走 autoglm-open-link）
-autoglm-websearch 查询 E："{类型} 完结 排行 site:qidian.com"
--> 用 autoglm-open-link 打开搜索到的排行榜 URL，提取：
+# 起点（反爬严格，必须走 网页内容提取）
+网络搜索 查询 E："{类型} 完结 排行 site:qidian.com"
+-> 用 网页内容提取 打开搜索到的排行榜 URL，提取：
    书名、评分、追人数、月票数、完结状态
 
-# 番茄小说（React SPA，需 autoglm-open-link）
-autoglm-websearch 查询 F："{类型} site:fanqienovel.com"
+# 番茄小说（React SPA，需 网页内容提取）
+网络搜索 查询 F："{类型} site:fanqienovel.com"
 -> 番茄小说分类（已验证可直接获取）：
    男频：西方奇幻/东方仙侠/科幻末世/都市日常/都市修真/都市高武/历史古代/
          战神赘婿/都市种田/传统玄幻/历史脑洞/悬疑脑洞/都市脑洞/玄幻脑洞/
          悬疑灵异/抗战谍战/游戏体育/动漫衍生
    女频：古风世情/科幻末世/玄幻言情/种田/年代/现言脑洞/宫斗宅斗/
          悬疑脑洞/古言脑洞/快穿/青春甜宠/星光璀璨/职场婚恋/豪门总裁
--> 用 autoglm-open-link 打开具体书页，提取：书名/简介/字数/评分/完结状态
+-> 用 网页内容提取 打开具体书页，提取：书名/简介/字数/评分/完结状态
 
 # 晋江（GBK 编码）
-autoglm-websearch 查询 G："{类型} 高分 完结 site:jjwxc.net"（言情类必查）
+网络搜索 查询 G："{类型} 高分 完结 site:jjwxc.net"（言情类必查）
 ```
 
 **来源 4: Goodreads**（外国文学/科幻核心来源）
 
 ```
-autoglm-websearch 查询 H："best {genre} novels 2024 site:goodreads.com"
-autoglm-websearch 查询 I："books similar to {参考书英文名} site:goodreads.com"
+网络搜索 查询 H："best {genre} novels 2024 site:goodreads.com"
+网络搜索 查询 I："books similar to {参考书英文名} site:goodreads.com"
 ```
 获取：Goodreads 评分(1-5)、评分人数、Genre 标签。
 **筛选标准**：评分 ≥ 4.0 且评分人数 > 5000 为高可信。
@@ -181,7 +181,7 @@ autoglm-websearch 查询 I："books similar to {参考书英文名} site:goodrea
 ### Phase 5: 避雷指南（用户问或同类型有已知雷区时）
 
 ```
-autoglm-websearch 查询：
+网络搜索 查询：
 "site:zhihu.com {类型} 烂尾 翻车 避雷"
 "site:tieba.baidu.com {类型} 坑 烂尾 抄袭"
 ```
@@ -190,7 +190,7 @@ autoglm-websearch 查询：
 
 ### Phase 6: 持续交互
 
-- "好看" -> 同类型深挖，autoglm-websearch 搜 "{类型} 冷门 佳作"
+- "好看" -> 同类型深挖，网络搜索 搜 "{类型} 冷门 佳作"
 - "不好看" -> 问原因，调整方向重推
 - "看过了" -> 推更冷门的
 - "求更多" -> 扩大搜索范围补充 3-5 本
@@ -199,8 +199,8 @@ autoglm-websearch 查询：
 
 - **不编造数据**：评分/字数/状态不确定时标注"待确认"
 - **数据源透明**：每本书标注评分来源平台
-- **搜索工具优先级**：autoglm-websearch -> autoglm-open-link -> exec(urllib)
-- **SPA 站点注意**：起点/番茄小说直接 curl 无效，必须用 autoglm-open-link
+- **搜索工具优先级**：网络搜索 -> 网页内容提取 -> exec(curl/urllib)
+- **SPA 站点注意**：起点/番茄小说直接 curl 无效，必须用 网页内容提取
 - **豆瓣可直接 curl**：豆瓣读书标签页是服务端渲染，可直接用 exec + urllib 抓取
 - **不剧透**：简介只给设定和开局
 - **交叉验证**：推荐至少有 2 个以上来源支撑

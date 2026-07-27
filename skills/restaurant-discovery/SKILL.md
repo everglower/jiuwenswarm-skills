@@ -24,19 +24,19 @@ version: 1.0.0
 
 | 平台 | 渲染方式 | 可获取数据 | 搜索方法 |
 |------|---------|----------|---------|
-| **大众点评** (dianping.com) | 反爬严格（直接 curl 返回 406+验证码） | 门店评分(1-5星)、人均消费、菜品推荐、用户评价、环境/服务/口味细分评分、商圈位置 | ⚠️ 必须用 autoglm-websearch 搜 "{城市} {菜系} site:dianping.com" 获取搜索结果摘要（含评分/人均/地址），摘要信息通常足够；如需详细评价用 autoglm-open-link 打开 |
-| **小红书** (xiaohongshu.com) | React SPA（直接 curl 返回 719KB JS 壳） | 真实探店笔记、菜品照片、环境实拍、消费体验、避雷信息 | autoglm-websearch 搜 "{城市} {菜系} 探店 site:xiaohongshu.com"，用 autoglm-open-link 打开笔记页提取正文 |
-| **美团** (meituan.com) | 反爬（404） | 门店信息、套餐价格、外卖菜单 | ⚠️ 直接 curl 无效，用 autoglm-websearch 搜 "{城市} {菜系} 美团 推荐" 间接获取 |
-| **知乎** (zhihu.com) | 服务端渲染 | 美食回答帖、本地人推荐帖、"XX城市必吃" | autoglm-websearch 搜 "{城市} 美食 推荐 site:zhihu.com" |
-| **微博** (weibo.com) | 部分可抓 | 本地美食博主推荐、餐厅舆情 | autoglm-websearch 搜 "{城市} {菜系} 推荐 site:weibo.com" |
-| **百度地图/高德地图** | API 可用 | 附近餐厅 POI、评分、距离 | autoglm-websearch 搜 "{地点} 附近 {菜系} 餐厅 评分" |
+| **大众点评** (dianping.com) | 反爬严格（直接 curl 返回 406+验证码） | 门店评分(1-5星)、人均消费、菜品推荐、用户评价、环境/服务/口味细分评分、商圈位置 | ⚠️ 必须用 网络搜索 搜 "{城市} {菜系} site:dianping.com" 获取搜索结果摘要（含评分/人均/地址），摘要信息通常足够；如需详细评价用 网页内容提取 打开 |
+| **小红书** (xiaohongshu.com) | React SPA（直接 curl 返回 719KB JS 壳） | 真实探店笔记、菜品照片、环境实拍、消费体验、避雷信息 | 网络搜索 搜 "{城市} {菜系} 探店 site:xiaohongshu.com"，用 网页内容提取 打开笔记页提取正文 |
+| **美团** (meituan.com) | 反爬（404） | 门店信息、套餐价格、外卖菜单 | ⚠️ 直接 curl 无效，用 网络搜索 搜 "{城市} {菜系} 美团 推荐" 间接获取 |
+| **知乎** (zhihu.com) | 服务端渲染 | 美食回答帖、本地人推荐帖、"XX城市必吃" | 网络搜索 搜 "{城市} 美食 推荐 site:zhihu.com" |
+| **微博** (weibo.com) | 部分可抓 | 本地美食博主推荐、餐厅舆情 | 网络搜索 搜 "{城市} {菜系} 推荐 site:weibo.com" |
+| **百度地图/高德地图** | API 可用 | 附近餐厅 POI、评分、距离 | 网络搜索 搜 "{地点} 附近 {菜系} 餐厅 评分" |
 
 ### 搜索工具使用顺序
 
-1. **第一选择**：`autoglm-websearch` -- 搜索关键词，获取搜索结果摘要（大众点评的摘要通常含评分/人均/地址，足够初筛）
-2. **第二选择**：`autoglm-open-link` -- 打开具体页面提取详细评价
+1. **第一选择**：`网络搜索` -- 搜索关键词，获取搜索结果摘要（大众点评的摘要通常含评分/人均/地址，足够初筛）
+2. **第二选择**：`网页内容提取` -- 打开具体页面提取详细评价
 3. ⚠️ 大众点评/美团直接 curl 会触发反爬（406/验证码），必须走 websearch
-4. ⚠️ 小红书为 React SPA，直接 curl 只返回 JS 壳，必须用 autoglm-open-link
+4. ⚠️ 小红书为 React SPA，直接 curl 只返回 JS 壳，必须用 网页内容提取
 
 ## 工作流程
 
@@ -58,8 +58,8 @@ version: 1.0.0
 **来源 1: 大众点评（评分/人均/位置 核心来源）**
 
 ```
-autoglm-websearch 查询 A："{城市} {区域} {菜系} site:dianping.com"
-autoglm-websearch 查询 B："{城市} {菜系} 排行 site:dianping.com"
+网络搜索 查询 A："{城市} {区域} {菜系} site:dianping.com"
+网络搜索 查询 B："{城市} {菜系} 排行 site:dianping.com"
 ```
 
 从搜索结果摘要中提取：
@@ -73,11 +73,11 @@ autoglm-websearch 查询 B："{城市} {菜系} 排行 site:dianping.com"
 **来源 2: 小红书（真实探店体验 核心来源）**
 
 ```
-autoglm-websearch 查询 C："{城市} {菜系} 探店 site:xiaohongshu.com"
-autoglm-websearch 查询 D："{城市} {场景} 餐厅 推荐 site:xiaohongshu.com"
+网络搜索 查询 C："{城市} {菜系} 探店 site:xiaohongshu.com"
+网络搜索 查询 D："{城市} {场景} 餐厅 推荐 site:xiaohongshu.com"
 ```
 
-用 autoglm-open-link 打开高赞笔记，提取：
+用 网页内容提取 打开高赞笔记，提取：
 - 推荐菜品和踩雷菜品
 - 环境实拍描述
 - 排队/订位情况
@@ -87,8 +87,8 @@ autoglm-websearch 查询 D："{城市} {场景} 餐厅 推荐 site:xiaohongshu.c
 **来源 3: 知乎（本地人口碑验证）**
 
 ```
-autoglm-websearch 查询 E："{城市} {菜系} 推荐 site:zhihu.com"
-autoglm-websearch 查询 F："{城市} 必吃 美食 site:zhihu.com"
+网络搜索 查询 E："{城市} {菜系} 推荐 site:zhihu.com"
+网络搜索 查询 F："{城市} 必吃 美食 site:zhihu.com"
 ```
 
 提取：本地人一致推荐的餐厅、避雷信息。

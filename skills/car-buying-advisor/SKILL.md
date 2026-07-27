@@ -26,20 +26,20 @@ version: 3.1.0
 
 | 平台 | 可获取数据 | 搜索方法 |
 |------|----------|---------|
-| **汽车之家** (autohome.com.cn) | 车型参数库、指导价、配置对比、车主口碑评分、经销商报价 | 用 autoglm-websearch 搜 "{车型} site:autohome.com.cn" 获取车型页/口碑页链接，再用 autoglm-open-link 打开提取参数和评分 |
-| **懂车帝** (dongchedi.com) | 真实成交价、用户评分、车型对比工具、能耗排行、车主长评 | 懂车帝为 React SSR 页面，直接 curl 仅返回壳。必须用 autoglm-websearch 搜 "{车型} site:dongchedi.com" 拿到页面 URL 后，用 autoglm-open-link 打开（服务端渲染可拿到完整内容） |
-| **车质网** (12365auto.com) | 质量投诉数据库、投诉排行、通病统计、投诉销量比 | 用 autoglm-websearch 搜 "{车型} site:12365auto.com" 获取投诉页，或直接访问 https://www.12365auto.com/zlts/ 按车型/能源类型筛选 |
-| **太平洋汽车** (pcauto.com.cn) | 深度评测文章、试驾报告、横评对比 | 用 autoglm-websearch 搜 "{车型} 评测 site:pcauto.com.cn" |
-| **汽车之家口碑** (koubei.autohome.com.cn) | 真实车主长篇口碑、优缺点标签、评分细分（空间/动力/操控/油耗/舒适性/外观/内饰/性价比） | autoglm-websearch 搜 "{车型} site:koubei.autohome.com.cn" |
-| **瓜子二手车** (guazi.com) / 懂车帝二手 | 保值率数据、3年/5年残值率、二手车挂牌价 | autoglm-websearch 搜 "{车型} 保值率 二手车" |
-| **各地发改委/交警官网** | 牌照政策、购置税减免、新能源补贴 | autoglm-websearch 搜 "{城市} 新能源 补贴 牌照政策 2025" |
+| **汽车之家** (autohome.com.cn) | 车型参数库、指导价、配置对比、车主口碑评分、经销商报价 | 用 网络搜索 搜 "{车型} site:autohome.com.cn" 获取车型页/口碑页链接，再用 网页内容提取 打开提取参数和评分 |
+| **懂车帝** (dongchedi.com) | 真实成交价、用户评分、车型对比工具、能耗排行、车主长评 | 懂车帝为 React SSR 页面，直接 curl 仅返回壳。必须用 网络搜索 搜 "{车型} site:dongchedi.com" 拿到页面 URL 后，用 网页内容提取 打开（服务端渲染可拿到完整内容） |
+| **车质网** (12365auto.com) | 质量投诉数据库、投诉排行、通病统计、投诉销量比 | 用 网络搜索 搜 "{车型} site:12365auto.com" 获取投诉页，或直接访问 https://www.12365auto.com/zlts/ 按车型/能源类型筛选 |
+| **太平洋汽车** (pcauto.com.cn) | 深度评测文章、试驾报告、横评对比 | 用 网络搜索 搜 "{车型} 评测 site:pcauto.com.cn" |
+| **汽车之家口碑** (koubei.autohome.com.cn) | 真实车主长篇口碑、优缺点标签、评分细分（空间/动力/操控/油耗/舒适性/外观/内饰/性价比） | 网络搜索 搜 "{车型} site:koubei.autohome.com.cn" |
+| **瓜子二手车** (guazi.com) / 懂车帝二手 | 保值率数据、3年/5年残值率、二手车挂牌价 | 网络搜索 搜 "{车型} 保值率 二手车" |
+| **各地发改委/交警官网** | 牌照政策、购置税减免、新能源补贴 | 网络搜索 搜 "{城市} 新能源 补贴 牌照政策 2025" |
 
 ### 搜索工具使用顺序（重要）
 
-1. **第一选择**：`autoglm-websearch` -- 搜索关键词，获取搜索结果（标题+URL+摘要）
-2. **第二选择**：`autoglm-open-link` -- 打开搜索结果中的具体页面 URL，提取完整正文
+1. **第一选择**：`网络搜索` -- 搜索关键词，获取搜索结果（标题+URL+摘要）
+2. **第二选择**：`网页内容提取` -- 打开搜索结果中的具体页面 URL，提取完整正文
 3. **备选**：`exec` + Python urllib 直接抓取（仅适用于服务端渲染的页面如车质网、豆瓣读书）
-4. ⚠️ 懂车帝、番茄小说等 React SPA 站点直接 curl 只返回壳，必须走 autoglm-open-link
+4. ⚠️ 懂车帝、番茄小说等 React SPA 站点直接 curl 只返回壳，必须走 网页内容提取
 
 ## 工作流程
 
@@ -60,19 +60,19 @@ version: 3.1.0
 
 **搜索 1 -- 汽车之家车型推荐文章**
 ```
-autoglm-websearch 查询："{预算}万 {车型类别} 推荐 site:autohome.com.cn"
+网络搜索 查询："{预算}万 {车型类别} 推荐 site:autohome.com.cn"
 ```
 从搜索结果摘要中提取被推荐的车型名称，记录指导价区间。
 
 **搜索 2 -- 懂车帝选车**
 ```
-autoglm-websearch 查询："{预算}万 {动力类型} {车型类别} site:dongchedi.com"
+网络搜索 查询："{预算}万 {动力类型} {车型类别} site:dongchedi.com"
 ```
 从搜索结果中提取车型名和用户评分。
 
 **搜索 3 -- 通用补充搜索**
 ```
-autoglm-websearch 查询："{用途关键词} {预算}万 车型推荐 2025"
+网络搜索 查询："{用途关键词} {预算}万 车型推荐 2025"
 ```
 
 目标：收集 8-12 款候选车型。
@@ -81,8 +81,8 @@ autoglm-websearch 查询："{用途关键词} {预算}万 车型推荐 2025"
 
 **3a. 价格行情**
 ```
-autoglm-websearch 查询："{车型} 落地价 优惠 site:dongchedi.com"
--> 如果搜索结果有懂车帝车型页 URL，用 autoglm-open-link 打开提取：
+网络搜索 查询："{车型} 落地价 优惠 site:dongchedi.com"
+-> 如果搜索结果有懂车帝车型页 URL，用 网页内容提取 打开提取：
    - 指导价区间
    - 参考落地价
    - 当前优惠幅度
@@ -90,8 +90,8 @@ autoglm-websearch 查询："{车型} 落地价 优惠 site:dongchedi.com"
 
 **3b. 口碑评分**
 ```
-autoglm-websearch 查询："{车型} 口碑 优缺点 site:koubei.autohome.com.cn"
--> 用 autoglm-open-link 打开口碑页，提取：
+网络搜索 查询："{车型} 口碑 优缺点 site:koubei.autohome.com.cn"
+-> 用 网页内容提取 打开口碑页，提取：
    - 综合评分（1-5分）
    - 细分评分：空间/动力/操控/油耗/舒适性/外观/内饰/性价比
    - 高频好评关键词（3-5个）
@@ -100,11 +100,11 @@ autoglm-websearch 查询："{车型} 口碑 优缺点 site:koubei.autohome.com.c
 
 **3c. 投诉可靠性**
 ```
-autoglm-websearch 查询："{车型} 投诉 site:12365auto.com"
+网络搜索 查询："{车型} 投诉 site:12365auto.com"
 -> 从搜索结果摘要提取：
    - 投诉总量
    - 高频投诉类型（发动机/变速箱/电气/车身/底盘）
--> 如果摘要信息不够，用 autoglm-open-link 打开车质网页面提取详细投诉列表
+-> 如果摘要信息不够，用 网页内容提取 打开车质网页面提取详细投诉列表
 ```
 
 **淘汰规则**：
@@ -187,7 +187,7 @@ autoglm-websearch 查询："{车型} 投诉 site:12365auto.com"
 **新能源专属检查**（如适用）
 - 家充桩：小区物业同意安装？电表容量足够？
 - 电池质保：首任车主终身质保？衰减到多少%可换？
-- 冬季续航：autoglm-websearch 搜 "{车型} 冬季 续航 实测"
+- 冬季续航：网络搜索 搜 "{车型} 冬季 续航 实测"
 - 公共充电：用户住址/公司 3km 内充电桩密度
 
 **验车清单**
@@ -208,7 +208,7 @@ autoglm-websearch 查询："{车型} 投诉 site:12365auto.com"
 
 - **数据时效性**：价格和优惠变化快，标注搜索日期
 - **数据源透明**：每个数据点标注来源平台
-- **搜索工具优先级**：autoglm-websearch -> autoglm-open-link -> exec(urllib)
-- **SPA 站点注意**：懂车帝/番茄小说等 React 站直接 curl 只返回空壳，必须用 autoglm-open-link
+- **搜索工具优先级**：网络搜索 -> 网页内容提取 -> exec(curl/urllib)
+- **SPA 站点注意**：懂车帝/番茄小说等 React 站直接 curl 只返回空壳，必须用 网页内容提取
 - **政策差异**：购置税减免、补贴、牌照政策各地不同
 - **交叉验证**：口碑/投诉/评测数据至少交叉 2 个平台

@@ -28,30 +28,30 @@ version: 1.0.0
 
 | 平台 | 平台特点 | 获取数据方式 |
 |------|---------|------------|
-| **红果短剧**（字节跳动旗下，APP） | 免费短剧最大平台，男频/女频/逆袭/霸总/重生各类齐全 | autoglm-websearch 搜 "红果短剧 {类型} 排行" 或 "红果短剧 热播榜 2024 2025"；搜索结果中常有用户分享的榜单截图或文章转载 |
-| **河马剧场**（快手旗下，APP） | 快手短剧入口，偏下沉市场，爽剧多 | autoglm-websearch 搜 "河马剧场 {类型} 推荐" 或 "河马剧场 热门 短剧" |
-| **抖音短剧**（抖音 APP 内短剧频道） | 抖音生态短剧，传播力强，爆款频出 | autoglm-websearch 搜 "抖音短剧 {类型} 排行 爆款" |
-| **腾讯微视短剧 / 99短剧** | 腾讯系短剧平台 | autoglm-websearch 搜 "腾讯短剧 {类型} 推荐" |
-| **B站短剧区**（bilibili.com） | B站有短剧分区，部分短剧可在线观看 | 可直接 curl：`https://search.bilibili.com/all?keyword={类型}短剧`；但搜索结果页结构变动频繁，建议用 autoglm-websearch 搜 "site:bilibili.com 短剧 {类型}" |
+| **红果短剧**（字节跳动旗下，APP） | 免费短剧最大平台，男频/女频/逆袭/霸总/重生各类齐全 | 网络搜索 搜 "红果短剧 {类型} 排行" 或 "红果短剧 热播榜 2024 2025"；搜索结果中常有用户分享的榜单截图或文章转载 |
+| **河马剧场**（快手旗下，APP） | 快手短剧入口，偏下沉市场，爽剧多 | 网络搜索 搜 "河马剧场 {类型} 推荐" 或 "河马剧场 热门 短剧" |
+| **抖音短剧**（抖音 APP 内短剧频道） | 抖音生态短剧，传播力强，爆款频出 | 网络搜索 搜 "抖音短剧 {类型} 排行 爆款" |
+| **腾讯微视短剧 / 99短剧** | 腾讯系短剧平台 | 网络搜索 搜 "腾讯短剧 {类型} 推荐" |
+| **B站短剧区**（bilibili.com） | B站有短剧分区，部分短剧可在线观看 | 可直接 curl：`https://search.bilibili.com/all?keyword={类型}短剧`；但搜索结果页结构变动频繁，建议用 网络搜索 搜 "site:bilibili.com 短剧 {类型}" |
 
 **第二层：口碑验证与评测（Web 端可查）**
 
 | 平台 | 可获取数据 | 搜索方法 |
 |------|----------|---------|
-| **知乎** | 短剧推荐帖、避雷帖、行业分析、"你看过什么好的短剧"等问题 | autoglm-websearch 搜 "短剧 推荐 site:zhihu.com" 或 "{类型} 短剧 推荐 知乎"；用 autoglm-open-link 打开高赞回答提取书单 |
-| **微博** | 短剧话题讨论、热搜、官方推荐、用户口碑 | autoglm-websearch 搜 "短剧 排行 site:weibo.com" 或 "{剧名} 评价 微博"（微博搜索页需登录，但 websearch 可抓到转载内容） |
-| **豆瓣** | 短剧条目、评分、短评（豆瓣已收录部分热门短剧） | autoglm-websearch 搜 "site:douban.com {剧名} 短剧"；或直接 curl `https://www.douban.com/search?q={剧名}&cat=1002`（服务端渲染，可直接抓取） |
-| **小红书** | 短剧推荐笔记、观后感、排行榜图文 | autoglm-websearch 搜 "{类型} 短剧 推荐 site:xiaohongshu.com"；React SPA，需 autoglm-open-link 打开 |
-| **百度贴吧** | 短剧吧、各平台吧的讨论帖 | autoglm-websearch 搜 "短剧 推荐 site:tieba.baidu.com" |
-| **抖音评论/评测博主** | 短剧解说、评测、排行榜视频 | autoglm-websearch 搜 "短剧 排行榜 评测 抖音" |
+| **知乎** | 短剧推荐帖、避雷帖、行业分析、"你看过什么好的短剧"等问题 | 网络搜索 搜 "短剧 推荐 site:zhihu.com" 或 "{类型} 短剧 推荐 知乎"；用 网页内容提取 打开高赞回答提取书单 |
+| **微博** | 短剧话题讨论、热搜、官方推荐、用户口碑 | 网络搜索 搜 "短剧 排行 site:weibo.com" 或 "{剧名} 评价 微博"（微博搜索页需登录，但 websearch 可抓到转载内容） |
+| **豆瓣** | 短剧条目、评分、短评（豆瓣已收录部分热门短剧） | 网络搜索 搜 "site:douban.com {剧名} 短剧"；或直接 curl `https://www.douban.com/search?q={剧名}&cat=1002`（服务端渲染，可直接抓取） |
+| **小红书** | 短剧推荐笔记、观后感、排行榜图文 | 网络搜索 搜 "{类型} 短剧 推荐 site:xiaohongshu.com"；React SPA，需 网页内容提取 打开 |
+| **百度贴吧** | 短剧吧、各平台吧的讨论帖 | 网络搜索 搜 "短剧 推荐 site:tieba.baidu.com" |
+| **抖音评论/评测博主** | 短剧解说、评测、排行榜视频 | 网络搜索 搜 "短剧 排行榜 评测 抖音" |
 
 ### 搜索工具使用顺序（重要）
 
-1. **第一选择**：`autoglm-websearch` -- 搜索关键词，获取搜索结果（标题+URL+摘要）
-2. **第二选择**：`autoglm-open-link` -- 打开搜索结果中的具体页面 URL，提取完整正文
+1. **第一选择**：`网络搜索` -- 搜索关键词，获取搜索结果（标题+URL+摘要）
+2. **第二选择**：`网页内容提取` -- 打开搜索结果中的具体页面 URL，提取完整正文
 3. **备选**：`exec` + Python urllib 直接抓取（仅适用于豆瓣搜索等少数服务端渲染页面）
 4. ⚠️ 红果/河马/抖音等短剧平台无独立 Web 端，必须通过 websearch 间接获取 APP 内榜单数据
-5. ⚠️ 小红书/B站搜索页为 React SPA，直接 curl 只返回壳，必须用 autoglm-open-link
+5. ⚠️ 小红书/B站搜索页为 React SPA，直接 curl 只返回壳，必须用 网页内容提取
 
 ## 工作流程
 
@@ -72,9 +72,9 @@ version: 1.0.0
 **来源 1: 短剧平台榜单（通过 websearch 间接获取）**
 
 ```
-autoglm-websearch 查询 A："红果短剧 {类型} 排行 热播 2024 2025"
-autoglm-websearch 查询 B："河马剧场 {类型} 推荐 热门 短剧"
-autoglm-websearch 查询 C："抖音短剧 {类型} 爆款 排行"
+网络搜索 查询 A："红果短剧 {类型} 排行 热播 2024 2025"
+网络搜索 查询 B："河马剧场 {类型} 推荐 热门 短剧"
+网络搜索 查询 C："抖音短剧 {类型} 爆款 排行"
 ```
 
 从搜索结果摘要中提取：
@@ -84,11 +84,11 @@ autoglm-websearch 查询 C："抖音短剧 {类型} 爆款 排行"
 **来源 2: 知乎推荐帖（口碑验证）**
 
 ```
-autoglm-websearch 查询 D："短剧 推荐 site:zhihu.com"
-autoglm-websearch 查询 E："{类型} 短剧 推荐 知乎"
+网络搜索 查询 D："短剧 推荐 site:zhihu.com"
+网络搜索 查询 E："{类型} 短剧 推荐 知乎"
 ```
 
-用 autoglm-open-link 打开高赞回答，提取：
+用 网页内容提取 打开高赞回答，提取：
 - 被多人推荐的剧名
 - 推荐理由和评价关键词
 - 避雷信息
@@ -96,8 +96,8 @@ autoglm-websearch 查询 E："{类型} 短剧 推荐 知乎"
 **来源 3: 小红书/微博口碑**
 
 ```
-autoglm-websearch 查询 F："{类型} 短剧 推荐 site:xiaohongshu.com"
-autoglm-websearch 查询 G："{剧名} 评价 site:weibo.com"（对候选剧逐个验证）
+网络搜索 查询 F："{类型} 短剧 推荐 site:xiaohongshu.com"
+网络搜索 查询 G："{剧名} 评价 site:weibo.com"（对候选剧逐个验证）
 ```
 
 **来源 4: 豆瓣评分**（有豆瓣条目的热门短剧）
@@ -109,7 +109,7 @@ url = f'https://www.douban.com/search?q={urllib.parse.quote(剧名)}&cat=1002'
 # 解析搜索结果中的评分和短评
 ```
 
-或 autoglm-websearch 搜 "site:douban.com {剧名} 短剧"
+或 网络搜索 搜 "site:douban.com {剧名} 短剧"
 
 ### Phase 3: 候选筛选
 
@@ -167,8 +167,8 @@ url = f'https://www.douban.com/search?q={urllib.parse.quote(剧名)}&cat=1002'
 ### Phase 5: 避雷指南（用户问或同类型有已知雷区时）
 
 ```
-autoglm-websearch 查询："短剧 烂尾 避雷 site:zhihu.com"
-autoglm-websearch 查询："{类型} 短剧 踩雷 微博"
+网络搜索 查询："短剧 烂尾 避雷 site:zhihu.com"
+网络搜索 查询："{类型} 短剧 踩雷 微博"
 ```
 
 整理为避雷表：

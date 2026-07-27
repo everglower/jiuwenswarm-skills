@@ -26,18 +26,18 @@ version: 1.0.0
 
 | 平台 | 渲染方式 | 可获取数据 | 搜索方法 |
 |------|---------|----------|---------|
-| **小红书** (xiaohongshu.com) | React SPA（直接 curl 返回 719KB JS 壳，无文字内容） | CityWalk 路线笔记、实拍照片、步行时间、沿途打卡点、拍照机位、避雷信息 | ⚠️ 必须用 autoglm-websearch 搜 "{城市} CityWalk site:xiaohongshu.com"，用 autoglm-open-link 打开笔记提取正文 |
-| **知乎** (zhihu.com) | 服务端渲染（但直接 curl 返回 403） | "XX城市适合 CityWalk 吗"回答帖、本地人推荐路线、城市规划/历史背景 | autoglm-websearch 搜 "{城市} CityWalk site:zhihu.com"；403 需走 websearch 间接获取 |
-| **B站** (bilibili.com) | 服务端渲染（268KB，有实际内容） | CityWalk Vlog、步行视角视频、路线实况、沿街景观 | 可直接 curl `https://search.bilibili.com/all?keyword={城市}CityWalk`（已验证有内容）；或 autoglm-websearch 搜 "site:bilibili.com {城市} CityWalk" |
-| **豆瓣** (douban.com) | 服务端渲染（已验证可直接 curl） | 同城活动/漫步活动/小组讨论、城市漫步相关日记 | 直接 exec curl `https://www.douban.com/search?q={城市}CityWalk&cat=1019`；或 autoglm-websearch 搜 "site:douban.com {城市} citywalk" |
-| **微博** (weibo.com) | 部分可抓 | CityWalk 话题、博主路线分享、限时活动 | autoglm-websearch 搜 "{城市} CityWalk site:weibo.com" |
-| **大众点评** (dianping.com) | 反爬（406+验证码） | 沿途咖啡馆/餐厅/小店评分 | autoglm-websearch 搜 "{商圈} 咖啡 site:dianping.com" 获取沿途补给点 |
-| **百度地图/高德地图** | API/网页 | 步行路线规划、距离、沿途 POI | autoglm-websearch 搜 "{起点} 到 {终点} 步行 路线" |
+| **小红书** (xiaohongshu.com) | React SPA（直接 curl 返回 719KB JS 壳，无文字内容） | CityWalk 路线笔记、实拍照片、步行时间、沿途打卡点、拍照机位、避雷信息 | ⚠️ 必须用 网络搜索 搜 "{城市} CityWalk site:xiaohongshu.com"，用 网页内容提取 打开笔记提取正文 |
+| **知乎** (zhihu.com) | 服务端渲染（但直接 curl 返回 403） | "XX城市适合 CityWalk 吗"回答帖、本地人推荐路线、城市规划/历史背景 | 网络搜索 搜 "{城市} CityWalk site:zhihu.com"；403 需走 websearch 间接获取 |
+| **B站** (bilibili.com) | 服务端渲染（268KB，有实际内容） | CityWalk Vlog、步行视角视频、路线实况、沿街景观 | 可直接 curl `https://search.bilibili.com/all?keyword={城市}CityWalk`（已验证有内容）；或 网络搜索 搜 "site:bilibili.com {城市} CityWalk" |
+| **豆瓣** (douban.com) | 服务端渲染（已验证可直接 curl） | 同城活动/漫步活动/小组讨论、城市漫步相关日记 | 直接 exec curl `https://www.douban.com/search?q={城市}CityWalk&cat=1019`；或 网络搜索 搜 "site:douban.com {城市} citywalk" |
+| **微博** (weibo.com) | 部分可抓 | CityWalk 话题、博主路线分享、限时活动 | 网络搜索 搜 "{城市} CityWalk site:weibo.com" |
+| **大众点评** (dianping.com) | 反爬（406+验证码） | 沿途咖啡馆/餐厅/小店评分 | 网络搜索 搜 "{商圈} 咖啡 site:dianping.com" 获取沿途补给点 |
+| **百度地图/高德地图** | API/网页 | 步行路线规划、距离、沿途 POI | 网络搜索 搜 "{起点} 到 {终点} 步行 路线" |
 
 ### 搜索工具使用顺序
 
-1. **第一选择**：`autoglm-websearch` -- 搜索关键词，获取搜索结果摘要
-2. **第二选择**：`autoglm-open-link` -- 打开笔记/回答/游记提取完整正文
+1. **第一选择**：`网络搜索` -- 搜索关键词，获取搜索结果摘要
+2. **第二选择**：`网页内容提取` -- 打开笔记/回答/游记提取完整正文
 3. **备选**：`exec` + Python urllib 直接抓取 B站搜索页和豆瓣搜索页（已验证服务端渲染有内容）
 4. ⚠️ 小红书为 React SPA，知乎直接 curl 返回 403，大众点评 406，必须走 websearch
 
@@ -60,12 +60,12 @@ version: 1.0.0
 **来源 1: 小红书（CityWalk 路线笔记 核心来源）**
 
 ```
-autoglm-websearch 查询 A："{城市} CityWalk 路线 site:xiaohongshu.com"
-autoglm-websearch 查询 B："{城市} citywalk {风格关键词} site:xiaohongshu.com"
-autoglm-websearch 查询 C："{城市} 漫步 路线 推荐 site:xiaohongshu.com"
+网络搜索 查询 A："{城市} CityWalk 路线 site:xiaohongshu.com"
+网络搜索 查询 B："{城市} citywalk {风格关键词} site:xiaohongshu.com"
+网络搜索 查询 C："{城市} 漫步 路线 推荐 site:xiaohongshu.com"
 ```
 
-用 autoglm-open-link 打开高赞笔记，提取：
+用 网页内容提取 打开高赞笔记，提取：
 - 具体路线（起点->途经->终点）
 - 步行距离和耗时
 - 沿途打卡点/拍照机位
@@ -75,8 +75,8 @@ autoglm-websearch 查询 C："{城市} 漫步 路线 推荐 site:xiaohongshu.com
 **来源 2: 知乎（本地人路线推荐和历史背景）**
 
 ```
-autoglm-websearch 查询 D："{城市} CityWalk site:zhihu.com"
-autoglm-websearch 查询 E："{城市} 适合走路逛 site:zhihu.com"
+网络搜索 查询 D："{城市} CityWalk site:zhihu.com"
+网络搜索 查询 E："{城市} 适合走路逛 site:zhihu.com"
 ```
 
 提取：
@@ -92,7 +92,7 @@ autoglm-websearch 查询 E："{城市} 适合走路逛 site:zhihu.com"
 url = f'https://search.bilibili.com/all?keyword={urllib.parse.quote(城市 + "CityWalk")}'
 # 页面解析：提取视频标题和播放量，判断路线热度和真实感
 
-或 autoglm-websearch 查询 F："site:bilibili.com {城市} CityWalk"
+或 网络搜索 查询 F："site:bilibili.com {城市} CityWalk"
 ```
 
 获取：路线视频实况、UP 主亲身体验、路线真实感验证。
@@ -110,8 +110,8 @@ url = f'https://www.douban.com/search?q={urllib.parse.quote(城市 + "CityWalk")
 **来源 5: 大众点评（沿途补给点）**
 
 ```
-autoglm-websearch 查询 G："{路线途经商圈} 咖啡馆 site:dianping.com"
-autoglm-websearch 查询 H："{路线途经商圈} 小店 推荐 site:dianping.com"
+网络搜索 查询 G："{路线途经商圈} 咖啡馆 site:dianping.com"
+网络搜索 查询 H："{路线途经商圈} 小店 推荐 site:dianping.com"
 ```
 
 获取：沿途咖啡馆/餐厅/特色小店的评分和人均。
@@ -216,7 +216,7 @@ autoglm-websearch 查询 H："{路线途经商圈} 小店 推荐 site:dianping.c
 
 **天气提醒**
 ```
-autoglm-websearch 查询："{城市} 天气预报 {日期}"
+网络搜索 查询："{城市} 天气预报 {日期}"
 -> 根据天气调整推荐：
    晴天：户外路线优先
    雨天：建议改为有遮蔽的路线（如商场连廊/地下街/博物馆群）
