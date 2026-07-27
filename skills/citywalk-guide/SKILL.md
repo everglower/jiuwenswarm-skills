@@ -26,20 +26,20 @@ version: 1.0.0
 
 | 平台 | 渲染方式 | 可获取数据 | 搜索方法 |
 |------|---------|----------|---------|
-| **小红书** (xiaohongshu.com) | React SPA（直接 curl 返回 719KB JS 壳，无文字内容） | CityWalk 路线笔记、实拍照片、步行时间、沿途打卡点、拍照机位、避雷信息 | ⚠️ 必须用 网络搜索 搜 "{城市} CityWalk site:xiaohongshu.com"，用 网页内容提取 打开笔记提取正文 |
-| **知乎** (zhihu.com) | 服务端渲染（但直接 curl 返回 403） | "XX城市适合 CityWalk 吗"回答帖、本地人推荐路线、城市规划/历史背景 | 网络搜索 搜 "{城市} CityWalk site:zhihu.com"；403 需走 websearch 间接获取 |
-| **B站** (bilibili.com) | 服务端渲染（268KB，有实际内容） | CityWalk Vlog、步行视角视频、路线实况、沿街景观 | 可直接 curl `https://search.bilibili.com/all?keyword={城市}CityWalk`（已验证有内容）；或 网络搜索 搜 "site:bilibili.com {城市} CityWalk" |
-| **豆瓣** (douban.com) | 服务端渲染（已验证可直接 curl） | 同城活动/漫步活动/小组讨论、城市漫步相关日记 | 直接 exec curl `https://www.douban.com/search?q={城市}CityWalk&cat=1019`；或 网络搜索 搜 "site:douban.com {城市} citywalk" |
-| **微博** (weibo.com) | 部分可抓 | CityWalk 话题、博主路线分享、限时活动 | 网络搜索 搜 "{城市} CityWalk site:weibo.com" |
+| **小红书** (xiaohongshu.com) | 无法直接抓取（页面内容由前端动态加载） | CityWalk 路线笔记、实拍照片、步行时间、沿途打卡点、拍照机位、避雷信息 | ⚠️ 必须用 网络搜索 搜 "{城市} CityWalk site:xiaohongshu.com"，用 网页内容提取 打开笔记提取正文 |
+| **知乎** (zhihu.com) | 有限制（直接抓取返回 403） | "XX城市适合 CityWalk 吗"回答帖、本地人推荐路线、城市规划/历史背景 | 网络搜索 搜 "{城市} CityWalk site:zhihu.com"；403 需走 网络搜索 间接获取 |
+| **B站** (bilibili.com) | 可直接抓取（有实际内容） | CityWalk Vlog、步行视角视频、路线实况、沿街景观 | 可直接抓取 `https://search.bilibili.com/all?keyword={城市}CityWalk`（已验证有内容）；或 网络搜索 搜 "site:bilibili.com {城市} CityWalk" |
+| **豆瓣** (douban.com) | 可直接抓取 | 同城活动/漫步活动/小组讨论、城市漫步相关日记 | 直接 直接抓取 `https://www.douban.com/search?q={城市}CityWalk&cat=1019`；或 网络搜索 搜 "site:douban.com {城市} citywalk" |
+| **微博** (weibo.com) | 部分可直接抓取 | CityWalk 话题、博主路线分享、限时活动 | 网络搜索 搜 "{城市} CityWalk site:weibo.com" |
 | **大众点评** (dianping.com) | 反爬（406+验证码） | 沿途咖啡馆/餐厅/小店评分 | 网络搜索 搜 "{商圈} 咖啡 site:dianping.com" 获取沿途补给点 |
-| **百度地图/高德地图** | API/网页 | 步行路线规划、距离、沿途 POI | 网络搜索 搜 "{起点} 到 {终点} 步行 路线" |
+| **百度地图/高德地图** | 可查询 | 步行路线规划、距离、沿途 POI | 网络搜索 搜 "{起点} 到 {终点} 步行 路线" |
 
 ### 搜索工具使用顺序
 
 1. **第一选择**：`网络搜索` -- 搜索关键词，获取搜索结果摘要
 2. **第二选择**：`网页内容提取` -- 打开笔记/回答/游记提取完整正文
-3. **备选**：`exec` + Python urllib 直接抓取 B站搜索页和豆瓣搜索页（已验证服务端渲染有内容）
-4. ⚠️ 小红书为 React SPA，知乎直接 curl 返回 403，大众点评 406，必须走 websearch
+3. **备选**：`直接抓取 直接抓取 B站搜索页和豆瓣搜索页（已验证可直接抓取有内容）
+4. ⚠️ 小红书为 无法直接抓取，知乎直接抓取返回 403，大众点评 406，必须走 网络搜索
 
 ## 工作流程
 
@@ -88,7 +88,7 @@ version: 1.0.0
 **来源 3: B站（Vlog 实况验证）**
 
 ```
-可直接 exec + urllib 抓取：
+可直接 直接抓取 抓取：
 url = f'https://search.bilibili.com/all?keyword={urllib.parse.quote(城市 + "CityWalk")}'
 # 页面解析：提取视频标题和播放量，判断路线热度和真实感
 
@@ -100,7 +100,7 @@ url = f'https://search.bilibili.com/all?keyword={urllib.parse.quote(城市 + "Ci
 **来源 4: 豆瓣（同城漫步活动）**
 
 ```
-可直接 exec + urllib 抓取：
+可直接 直接抓取 抓取：
 url = f'https://www.douban.com/search?q={urllib.parse.quote(城市 + "CityWalk")}&cat=1019'
 # 豆瓣同城活动/小组讨论
 ```
@@ -262,8 +262,8 @@ url = f'https://www.douban.com/search?q={urllib.parse.quote(城市 + "CityWalk")
 - **步行安全**：提醒注意交通安全，部分老城区人行道窄
 - **天气优先**：高温/暴雨/雾霾天不建议 CityWalk，主动提醒
 - **数据时效性**：沿街店铺变化快（关店/新开），标注搜索日期
-- **反爬限制**：小红书/知乎/大众点评直接 curl 无效，必须走 websearch
-- **B站可抓**：B站搜索页是服务端渲染，可直接 curl 获取视频标题和播放量
-- **豆瓣可抓**：豆瓣搜索页可直接 curl 获取小组/活动信息
+- **反爬限制**：小红书/知乎/大众点评无法直接抓取，必须走 网络搜索
+- **B站可抓**：B站搜索页是可直接抓取，可直接抓取获取视频标题和播放量
+- **豆瓣可抓**：豆瓣搜索页可直接抓取获取小组/活动信息
 - **拍照礼仪**：老城区居民区拍照注意隐私，提醒尊重居民
 - **消费提醒**：热门 CityWalk 路线的咖啡馆可能比普通区域贵 30-50%

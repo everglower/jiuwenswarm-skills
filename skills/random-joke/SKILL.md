@@ -26,21 +26,21 @@ version: 3.1.0
 
 | 平台 | 渲染方式 | 可获取内容 | 搜索方法 |
 |------|---------|----------|---------|
-| **知乎** (zhihu.com) | 服务端渲染 | 高赞笑话回答、段子合集帖、"你听过最好笑的笑话"等问题 | 网络搜索 搜 "{类型} 笑话 搞笑 site:zhihu.com"，用 网页内容提取 打开回答页提取全文 |
-| **百度贴吧** (tieba.baidu.com) | 服务端渲染 | 笑话吧/冷笑话吧/段子吧热帖 | 网络搜索 搜 "笑话 {类型} 爆笑 site:tieba.baidu.com" |
-| **微博** (weibo.com) | 部分服务端渲染 | 热搜段子手、搞笑博主内容 | 网络搜索 搜 "{类型} 段子 搞笑 site:weibo.com" |
-| **小红书** (xiaohongshu.com) | React SPA（直接 curl 仅返回壳） | 生活类搞笑、情境笑话、图文段子 | 必须用 网络搜索 搜 "{类型} 笑话 site:xiaohongshu.com" 后，用 网页内容提取 打开 |
-| **糗事百科** (qiushibaike.com) | 服务端渲染 | 用户原创段子、真实糗事 | 网络搜索 搜 "{类型} 搞笑 site:qiushibaike.com" 或直接 exec curl 抓取 |
-| **Reddit/r/jokes** (reddit.com/r/jokes) | 服务端渲染 | 英文笑话高质量来源，按 hot/top 排序 | 网络搜索 搜 "{keyword} joke site:reddit.com/r/jokes" |
-| **Reddit/r/dadjokes** (reddit.com/r/dadjokes) | 服务端渲染 | 谐音梗/冷笑话/ dad jokes | 网络搜索 搜 "{keyword} site:reddit.com/r/dadjokes" |
-| **OneLineFun** (onelinefun.com) | 服务端渲染 | 一句话笑话英文素材 | 网络搜索 搜 "{keyword} site:onelinefun.com" 或直接 exec curl |
+| **知乎** (zhihu.com) | 可直接抓取 | 高赞笑话回答、段子合集帖、"你听过最好笑的笑话"等问题 | 网络搜索 搜 "{类型} 笑话 搞笑 site:zhihu.com"，用 网页内容提取 打开回答页提取全文 |
+| **百度贴吧** (tieba.baidu.com) | 可直接抓取 | 笑话吧/冷笑话吧/段子吧热帖 | 网络搜索 搜 "笑话 {类型} 爆笑 site:tieba.baidu.com" |
+| **微博** (weibo.com) | 部分可直接抓取 | 热搜段子手、搞笑博主内容 | 网络搜索 搜 "{类型} 段子 搞笑 site:weibo.com" |
+| **小红书** (xiaohongshu.com) | 无法直接抓取（页面内容由前端动态加载） | 生活类搞笑、情境笑话、图文段子 | 必须用 网络搜索 搜 "{类型} 笑话 site:xiaohongshu.com" 后，用 网页内容提取 打开 |
+| **糗事百科** (qiushibaike.com) | 可直接抓取 | 用户原创段子、真实糗事 | 网络搜索 搜 "{类型} 搞笑 site:qiushibaike.com" 或直接 直接抓取 抓取 |
+| **Reddit/r/jokes** (reddit.com/r/jokes) | 可直接抓取 | 英文笑话高质量来源，按 hot/top 排序 | 网络搜索 搜 "{keyword} joke site:reddit.com/r/jokes" |
+| **Reddit/r/dadjokes** (reddit.com/r/dadjokes) | 可直接抓取 | 谐音梗/冷笑话/ dad jokes | 网络搜索 搜 "{keyword} site:reddit.com/r/dadjokes" |
+| **OneLineFun** (onelinefun.com) | 可直接抓取 | 一句话笑话英文素材 | 网络搜索 搜 "{keyword} site:onelinefun.com" 或直接 直接抓取 |
 
 ### 搜索工具使用顺序（重要）
 
 1. **第一选择**：`网络搜索` -- 搜索关键词，获取搜索结果（标题+URL+摘要）
 2. **第二选择**：`网页内容提取` -- 打开搜索结果中的具体页面 URL，提取完整正文
-3. **备选**：`exec` + Python urllib 直接抓取（适用于知乎/贴吧/糗百/Reddit 等服务端渲染站点）
-4. ⚠️ 小红书等 React SPA 站直接 curl 只返回壳，必须用 网页内容提取
+3. **备选**：`直接抓取 直接抓取（适用于知乎/贴吧/糗百/Reddit 等可直接抓取站点）
+4. ⚠️ 小红书等 无法直接抓取 站无法直接抓取，必须用 网页内容提取
 
 ## 笑话类型库
 
