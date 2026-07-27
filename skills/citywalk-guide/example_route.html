@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上海法租界 CityWalk - 上海</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f5f5; }
+        #header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        #header h1 { font-size: 22px; margin-bottom: 6px; }
+        #header .meta { font-size: 13px; opacity: 0.85; }
+        #map { width: 100%; height: 60vh; min-height: 450px; }
+        .route-list {
+            max-width: 700px;
+            margin: 16px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .route-list h2 { font-size: 16px; color: #333; margin-bottom: 14px; }
+        .route-list .point {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .route-list .point:last-child { border-bottom: none; }
+        .route-list .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .route-list .point-info b { font-size: 15px; color: #333; }
+        .route-list .point-info .desc { font-size: 13px; color: #888; margin-top: 2px; }
+        .waypoint-label {
+            background: transparent !important;
+            border: none !important;
+            color: white !important;
+            font-weight: bold !important;
+            font-size: 12px !important;
+            text-shadow: 0 0 3px rgba(0,0,0,0.6) !important;
+        }
+        .leaflet-popup-content { font-size: 14px; line-height: 1.6; }
+        .footer { text-align: center; padding: 16px; font-size: 12px; color: #aaa; }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>🚶 上海法租界 CityWalk</h1>
+        <div class="meta">📍 上海 · 4 个路线点 · 2026-07-27 23:49</div>
+    </div>
+    <div id="map"></div>
+    <div class="route-list">
+        <h2>📋 路线详情</h2>
+        <div class="point">
+            <span class="num" style="background:#e74c3c">1</span>
+            <div class="point-info">
+                <b>武康大楼</b>
+                <div class="desc">标志性拍照打卡点</div>
+            </div>
+        </div>
+        <div class="point">
+            <span class="num" style="background:#e67e22">2</span>
+            <div class="point-info">
+                <b>安福路</b>
+                <div class="desc">咖啡馆和独立小店聚集</div>
+            </div>
+        </div>
+        <div class="point">
+            <span class="num" style="background:#f1c40f">3</span>
+            <div class="point-info">
+                <b>愚园路</b>
+                <div class="desc">文艺气息老马路</div>
+            </div>
+        </div>
+        <div class="point">
+            <span class="num" style="background:#2ecc71">4</span>
+            <div class="point-info">
+                <b>静安寺</b>
+                <div class="desc">古刹地标终点</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">CityWalk 路线图 · 点击标记点查看详情 · 可切换地图图层</div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([31.21915, 121.44409999999999], 15);
+        
+        // 高德地图瓦片（中文标注，无需Key）
+        var amapNormal = L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+            subdomains: ['1', '2', '3', '4'],
+            attribution: '高德地图',
+            maxZoom: 20
+        }).addTo(map);
+        
+        // 高德卫星图
+        var amapSatellite = L.tileLayer('https://webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}', {
+            subdomains: ['1', '2', '3', '4'],
+            attribution: '高德卫星',
+            maxZoom: 20
+        });
+        
+        // OpenStreetMap
+        var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            subdomains: ['a', 'b', 'c'],
+            attribution: 'OpenStreetMap',
+            maxZoom: 19
+        });
+        
+        L.control.layers({
+            '🗺️ 高德地图': amapNormal,
+            '🛰️ 高德卫星': amapSatellite,
+            '🌍 OpenStreetMap': osmLayer
+        }).addTo(map);
+        
+        // 路线连线（虚线）
+        var route = L.polyline([[31.2156, 121.4312], [31.215, 121.457], [31.222, 121.442], [31.2233, 121.447]], {
+            color: '#e74c3c',
+            weight: 4,
+            opacity: 0.75,
+            dashArray: '12, 8',
+            lineCap: 'round'
+        }).addTo(map);
+        
+        // 标记点
+
+    L.circleMarker([31.2156, 121.4312], {
+        radius: 16,
+        fillColor: '#e74c3c',
+        color: '#fff',
+        weight: 3,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`<b>1. 武康大楼</b><br><span style='color:#666;font-size:12px'>标志性拍照打卡点</span>`).bindTooltip('1', {permanent: true, direction: 'center', className: 'waypoint-label'});
+
+    L.circleMarker([31.215, 121.457], {
+        radius: 16,
+        fillColor: '#e67e22',
+        color: '#fff',
+        weight: 3,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`<b>2. 安福路</b><br><span style='color:#666;font-size:12px'>咖啡馆和独立小店聚集</span>`).bindTooltip('2', {permanent: true, direction: 'center', className: 'waypoint-label'});
+
+    L.circleMarker([31.222, 121.442], {
+        radius: 16,
+        fillColor: '#f1c40f',
+        color: '#fff',
+        weight: 3,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`<b>3. 愚园路</b><br><span style='color:#666;font-size:12px'>文艺气息老马路</span>`).bindTooltip('3', {permanent: true, direction: 'center', className: 'waypoint-label'});
+
+    L.circleMarker([31.2233, 121.447], {
+        radius: 16,
+        fillColor: '#2ecc71',
+        color: '#fff',
+        weight: 3,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`<b>4. 静安寺</b><br><span style='color:#666;font-size:12px'>古刹地标终点</span>`).bindTooltip('4', {permanent: true, direction: 'center', className: 'waypoint-label'});
+
+        // 自动适配视图
+        map.fitBounds([[31.21, 121.42620000000001], [31.228299999999997, 121.46199999999999]], {
+            padding: [40, 40]
+        });
+        
+        // 路线总距离估算
+        var totalDist = 0;
+        var coords = [[31.2156, 121.4312], [31.215, 121.457], [31.222, 121.442], [31.2233, 121.447]];
+        for (var i = 1; i < coords.length; i++) {
+            totalDist += map.distance(coords[i-1], coords[i]);
+        }
+        var distStr = totalDist < 1000 ? Math.round(totalDist) + ' 米' : (totalDist/1000).toFixed(1) + ' 公里';
+        document.querySelector('.meta').innerHTML += ' · 直线距离约 ' + distStr;
+    </script>
+</body>
+</html>
