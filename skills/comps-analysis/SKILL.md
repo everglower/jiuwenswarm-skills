@@ -1,4 +1,5 @@
----
+﻿---
+license: Apache-2.0
 name: comps-analysis
 description: |
   Build institutional-grade comparable company analyses with operating metrics, valuation multiples, and statistical benchmarking in Excel/spreadsheet format.

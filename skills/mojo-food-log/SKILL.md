@@ -1,4 +1,5 @@
----
+﻿---
+license: MIT
 name: mojo-food-log
 description: "Use when the user uploads a food photo or describes what they ate — e.g. \"I had a chicken bento for lunch\", \"分析這張食物照片\", \"我剛吃了 100g 雞胸肉\", \"help me log this meal\", \"what's the calories in this\". Analyzes nutrition like a registered dietitian and generates a one-tap mojo app import link. Use this even if the user just casually mentions a meal without explicitly asking for analysis."
 ---

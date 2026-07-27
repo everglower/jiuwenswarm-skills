@@ -1,4 +1,5 @@
----
+﻿---
+license: MIT
 name: mood
 description: When the user shows signs of emotional distress during coding — including frustration ("this stupid code"), self-doubt ("am I too dumb"), anxiety about deadlines, giving up ("I quit"), negative self-talk, or expressing hopelessness. Also use when the user explicitly asks for emotional support, wants to vent, or mentions feeling stressed, anxious, or overwhelmed.
 ---

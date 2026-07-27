@@ -1,4 +1,5 @@
----
+﻿---
+license: MIT
 name: break
 description: When the user shows signs of fatigue or burnout during coding — including increased typos, garbled text, frustrated or irritable tone, repetitive mistakes, confusion about simple concepts, or signs of rushing. Also use when the user explicitly mentions needing a break, feeling tired, or asks about rest. This skill provides gentle, non-intrusive health check-ins.
 ---

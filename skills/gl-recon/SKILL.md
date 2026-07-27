@@ -1,4 +1,5 @@
----
+﻿---
+license: Apache-2.0
 name: gl-recon
 description: Reconcile general ledger to subledger for a trade date or period — match at the position or transaction level, surface breaks, and classify each break by likely cause. Use for daily or month-end recon runs across asset classes.
 ---
